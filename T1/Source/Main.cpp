@@ -43,7 +43,6 @@ int main(void){
 
     vector<Coordenadas>concatenateVertices;
     int num_vertices = 32;
-    float pi = 3.14;
     float radius = 0.20;
     float angle = 0.0;
     Coordenadas center;
