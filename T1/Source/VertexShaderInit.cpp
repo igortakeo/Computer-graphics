@@ -5,10 +5,10 @@
 
 char const *vertex_code =
     "attribute vec2 position;\n"
-    "uniform mat4 mat_Mult;\n"
+    "uniform mat4 transformation;\n"
     "void main()\n"
     "{\n"
-    "    gl_Position = mat_Mult*vec4(position, 0.0, 1.0);\n"
+    "    gl_Position = transformation*vec4(position, 0.0, 1.0);\n"
     "}\n";
 
 void ShaderSourceVertex(GLuint vertex){
