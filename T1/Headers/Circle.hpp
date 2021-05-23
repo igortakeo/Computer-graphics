@@ -18,8 +18,9 @@ class CircleShape{
         vector<Coordenadas>vertices;
         float radius;
         float angle;
+        Coordenadas center;
 };
 
-CircleShape CreateCircle(int num_vertices, float radius, float angle);
+CircleShape CreateCircle(int num_vertices, float radius, float angle, Coordenadas center);
 
 #endif

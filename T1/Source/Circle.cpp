@@ -9,7 +9,7 @@ using namespace std;
 
 float const pi = 3.1415;
 
-CircleShape CreateCircle(int num_vertices, float radius, float angle){
+CircleShape CreateCircle(int num_vertices, float radius, float angle, Coordenadas center){
 
     CircleShape circleShape;
     circleShape.num_vertices = num_vertices;
@@ -19,8 +19,8 @@ CircleShape CreateCircle(int num_vertices, float radius, float angle){
     float x, y;
     for (int i = 0; i < num_vertices; i++){
         angle += (2.0 * pi) / (float)num_vertices;
-        x = cos(angle) * radius;
-        y = sin(angle) * radius;
+        x = center.x + cos(angle) * radius;
+        y = center.y + sin(angle) * radius;
         Coordenadas c;
         c.x = x;
         c.y = y;

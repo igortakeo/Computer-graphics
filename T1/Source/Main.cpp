@@ -39,15 +39,43 @@ int main(void){
     glLinkProgram(program);
     glUseProgram(program);
 
+    //----------------------------Creating circles----------------------------
+
+    vector<Coordenadas>concatenateVertices;
     int num_vertices = 32;
     float pi = 3.14;
     float radius = 0.20;
     float angle = 0.0;
+    Coordenadas center;
+    
+    CircleShape circleShape;
 
-    CircleShape circleShape = CreateCircle(num_vertices, radius, angle);
+    center.x = 0.5; center.y = 0.0;
+    circleShape = CreateCircle(num_vertices, radius, angle, center);
+    concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
-    Coordenadas vertices[num_vertices];
-    copy(circleShape.vertices.begin(), circleShape.vertices.end(), vertices);
+    center.x = 0.0; center.y = 0.0;
+    circleShape = CreateCircle(num_vertices, radius, angle, center);
+    concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
+
+    center.x = 0.0; center.y = 0.5;
+    circleShape = CreateCircle(num_vertices, radius, angle, center);
+    concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
+
+
+    center.x = 0.0; center.y = -0.5;
+    circleShape = CreateCircle(num_vertices, radius, angle, center);
+    concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
+
+    center.x = -0.5; center.y = 0.0;
+    circleShape = CreateCircle(num_vertices, radius, angle, center);
+    concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
+
+
+    //------------------------------------------------------------------------
+
+    Coordenadas vertices[num_vertices*5];
+    copy(concatenateVertices.begin(), concatenateVertices.end(), vertices);
 
     GLuint buffer;
     glGenBuffers(1, &buffer);
@@ -58,6 +86,8 @@ int main(void){
     GLint loc = glGetAttribLocation(program, "position");
     glEnableVertexAttribArray(loc);
     glVertexAttribPointer(loc, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void *)0);
+
+    GLint loc_color = glGetUniformLocation(program, "color");
 
     CreateKeyboardKeys(0.0, 0.0);
     SetKeyboardEvent(window);
@@ -71,7 +101,7 @@ int main(void){
         glfwPollEvents();
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(1.0, 1.0, 1.0, 1.0);
+        glClearColor(0.0, 0.0, 0.0, 1.0);
         
         keys = GetKeyboardKeys();
 
@@ -81,8 +111,21 @@ int main(void){
 
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixTranslation);
-
+        
+        glUniform4f(loc_color, 0.0, 0.5, 0.0, 1.0);      
         glDrawArrays(GL_TRIANGLE_FAN, 0, 32);
+
+        glUniform4f(loc_color, 0.5, 0.0, 0.0, 1.0);
+        glDrawArrays(GL_TRIANGLE_FAN, 32, 32);
+
+        glUniform4f(loc_color, 0.0, 0.0, 0.5, 1.0);  
+        glDrawArrays(GL_TRIANGLE_FAN, 64, 32);
+        
+        glUniform4f(loc_color, 0.5, 0.5, 0.0, 1.0);
+        glDrawArrays(GL_TRIANGLE_FAN, 96, 32);
+
+        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
+        glDrawArrays(GL_TRIANGLE_FAN, 128, 32);
 
         glfwSwapBuffers(window);
     }

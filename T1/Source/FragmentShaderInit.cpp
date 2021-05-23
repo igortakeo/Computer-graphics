@@ -7,7 +7,7 @@ char const *fragment_code =
     "uniform vec4 color;\n"
     "void main()\n"
     "{\n"
-    "    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
+    "    gl_FragColor = color;\n"
     "}\n";
 
 void ShaderSourceFragment(GLuint fragment){
@@ -29,5 +29,4 @@ void CompileFragmentShader(GLuint fragment){
 
         printf("Erro de compilacao no Fragment Shader.\n");
     }
-
 }
