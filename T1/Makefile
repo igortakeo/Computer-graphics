@@ -3,7 +3,7 @@ all:
 	
 run:
 	./main_run
-	rm main_run
+	
 
 clean:
 	rm main_run
