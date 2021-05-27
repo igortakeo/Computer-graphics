@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <chrono>
+#include <thread>
 #include "../Headers/VertexShaderInit.hpp"
 #include "../Headers/FragmentShaderInit.hpp"
 #include "../Headers/Events.hpp"
@@ -150,6 +152,9 @@ int main(void){
 
     Keys keys = GetKeyboardKeys();
 
+    float transformMatrixRotation[16];
+    float teta_0 = 90.0, teta_1 = 90.0, teta_2 = 90.0, teta_3 = 90.0, teta_4 = 90.0, teta_5 = 90.0, teta_6 = 90.0, teta_7 = 90.0, teta_8 = 90.0;
+
     glfwShowWindow(window);
 
     while (!glfwWindowShouldClose(window)){
@@ -161,12 +166,7 @@ int main(void){
         
         keys = GetKeyboardKeys();
 
-        float transformMatrixTranslation[16];
-        vector<float>matrixTranslation = CreateMatrixTranslation(keys.t_x, keys.t_y);
-        copy(matrixTranslation.begin(), matrixTranslation.end(), transformMatrixTranslation);
 
-        loc = glGetUniformLocation(program, "transformation");
-        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixTranslation);
 
 
         //Desenhando Raios de Translacao (orbita) dos planetas
@@ -196,33 +196,116 @@ int main(void){
 
 
         //Desennhado planetas
+        
+
+        //--------------------------------------------------------
+        
+        //Planet-0
+        vector<float> matrixRotation = CreateMatrixRotation(teta_0);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
+
+
         glUniform4f(loc_color, 0.8, 0.8, 0.0, 1.0);      
         glDrawArrays(GL_TRIANGLE_FAN, 0, 32);
 
+
+        //Planet-1
+        matrixRotation = CreateMatrixRotation(teta_1);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
+        
         glUniform4f(loc_color, 0.6, 0.15, 0.0, 1.0);
         glDrawArrays(GL_TRIANGLE_FAN, 32, 32);
+
+        
+        //Planet-2
+        matrixRotation = CreateMatrixRotation(teta_2);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
 
         glUniform4f(loc_color, 0.7, 0.7, 0.7, 1.0);  
         glDrawArrays(GL_TRIANGLE_FAN, 64, 32);
         
+
+        //Planet-3
+        matrixRotation = CreateMatrixRotation(teta_3);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
+
         glUniform4f(loc_color, 0.0, 0.0, 0.8, 1.0);
         glDrawArrays(GL_TRIANGLE_FAN, 96, 32);
+
+
+        //Planet-4
+        matrixRotation = CreateMatrixRotation(teta_4);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
 
         glUniform4f(loc_color, 0.8, 0.1, 0.0, 1.0);        
         glDrawArrays(GL_TRIANGLE_FAN, 128, 32);
 
+        //Planet-5
+        matrixRotation = CreateMatrixRotation(teta_5);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
+
         glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
         glDrawArrays(GL_TRIANGLE_FAN, 160, 32);
+
+        //Planet-6
+        matrixRotation = CreateMatrixRotation(teta_6);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
 
         glUniform4f(loc_color, 0.8, 0.4, 0.0, 1.0);        
         glDrawArrays(GL_TRIANGLE_FAN, 192, 32);
 
+
+        //Planet-7
+        matrixRotation = CreateMatrixRotation(teta_7);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
+
         glUniform4f(loc_color, 0.0, 0.0, 0.4, 1.0);        
         glDrawArrays(GL_TRIANGLE_FAN, 224, 32);
+
+
+        //Planet-8
+        matrixRotation = CreateMatrixRotation(teta_8);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
 
         glUniform4f(loc_color, 0.1, 0.1, 0.4, 1.0);        
         glDrawArrays(GL_TRIANGLE_FAN, 256, 32);
 
+
+        teta_0 += 0.8;
+        teta_1 -= 0.6;
+        teta_2 += 0.5;
+        teta_3 -= 0.4;
+        teta_4 += 0.3;
+        teta_5 -= 0.2;
+        teta_6 += 0.1;
+        teta_7 -= 0.1;
+        teta_8 -= 0.05;
+
+        //Reseting teta in order to keep planets orbit stopped
+        matrixRotation = CreateMatrixRotation(0.0);
+        copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
+        loc = glGetUniformLocation(program, "transformation");
+        glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
+
+        this_thread::sleep_for(chrono::milliseconds(100));
 
         glfwSwapBuffers(window);
     }
