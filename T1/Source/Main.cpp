@@ -167,60 +167,61 @@ int main(void){
 
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixTranslation);
-        
-        //Desennhado planetas
-        glUniform4f(loc_color, 0.0, 0.5, 0.0, 1.0);      
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 32);
-
-        glUniform4f(loc_color, 0.5, 0.5, 0.0, 1.0);
-        glDrawArrays(GL_TRIANGLE_FAN, 32, 32);
-
-        glUniform4f(loc_color, 0.0, 0.0, 0.5, 1.0);  
-        glDrawArrays(GL_TRIANGLE_FAN, 64, 32);
-        
-        glUniform4f(loc_color, 0.5, 0.5, 0.0, 1.0);
-        glDrawArrays(GL_TRIANGLE_FAN, 96, 32);
-
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_TRIANGLE_FAN, 128, 32);
-
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_TRIANGLE_FAN, 160, 32);
-
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_TRIANGLE_FAN, 192, 32);
-
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_TRIANGLE_FAN, 224, 32);
-
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_TRIANGLE_FAN, 256, 32);
 
 
         //Desenhando Raios de Translacao (orbita) dos planetas
-        glUniform4f(loc_color, 0.0, 0.5, 0.0, 1.0);      
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);      
         glDrawArrays(GL_LINE_STRIP, 288, 32);
         
-        glUniform4f(loc_color, 0.5, 0.5, 0.0, 1.0);
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);
         glDrawArrays(GL_LINE_STRIP, 320, 32);
 
-        glUniform4f(loc_color, 0.0, 0.0, 0.5, 1.0);  
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);  
         glDrawArrays(GL_LINE_STRIP, 352, 32);
         
-        glUniform4f(loc_color, 0.5, 0.5, 0.0, 1.0);
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);
         glDrawArrays(GL_LINE_STRIP, 384, 32);
 
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
         glDrawArrays(GL_LINE_STRIP, 416, 32);
 
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
         glDrawArrays(GL_LINE_STRIP, 448, 32);
 
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
         glDrawArrays(GL_LINE_STRIP, 480, 32);
 
-        glUniform4f(loc_color, 0.0, 0.5, 0.5, 1.0);        
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
         glDrawArrays(GL_LINE_STRIP, 512, 32);
+
+
+        //Desennhado planetas
+        glUniform4f(loc_color, 0.8, 0.8, 0.0, 1.0);      
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 32);
+
+        glUniform4f(loc_color, 0.6, 0.15, 0.0, 1.0);
+        glDrawArrays(GL_TRIANGLE_FAN, 32, 32);
+
+        glUniform4f(loc_color, 0.7, 0.7, 0.7, 1.0);  
+        glDrawArrays(GL_TRIANGLE_FAN, 64, 32);
+        
+        glUniform4f(loc_color, 0.0, 0.0, 0.8, 1.0);
+        glDrawArrays(GL_TRIANGLE_FAN, 96, 32);
+
+        glUniform4f(loc_color, 0.8, 0.1, 0.0, 1.0);        
+        glDrawArrays(GL_TRIANGLE_FAN, 128, 32);
+
+        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
+        glDrawArrays(GL_TRIANGLE_FAN, 160, 32);
+
+        glUniform4f(loc_color, 0.8, 0.4, 0.0, 1.0);        
+        glDrawArrays(GL_TRIANGLE_FAN, 192, 32);
+
+        glUniform4f(loc_color, 0.0, 0.0, 0.4, 1.0);        
+        glDrawArrays(GL_TRIANGLE_FAN, 224, 32);
+
+        glUniform4f(loc_color, 0.1, 0.1, 0.4, 1.0);        
+        glDrawArrays(GL_TRIANGLE_FAN, 256, 32);
 
 
         glfwSwapBuffers(window);
