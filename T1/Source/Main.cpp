@@ -166,9 +166,6 @@ int main(void){
         
         keys = GetKeyboardKeys();
 
-
-
-
         //Desenhando Raios de Translacao (orbita) dos planetas
         glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);      
         glDrawArrays(GL_LINE_STRIP, 288, 32);
