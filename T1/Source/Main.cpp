@@ -11,16 +11,32 @@
 #include "../Headers/Events.hpp"
 #include "../Headers/Circle.hpp"
 #include "../Headers/Transformations.hpp"
+#include "../Headers/Star.hpp"
 #include <iostream>
 #include <algorithm>
 #include <vector>
 
 using namespace std;
 
-vector<Coordenadas> CreatePlanets(Coordenadas center, const int num_vertices, const float angle){
+
+vector<Coordinates> ChangeToCoordinates(vector<float>coord){
+    
+    vector<Coordinates> pointsStar;
+    
+    for(int i=0; i<coord.size(); i+=2){
+        Coordinates a;
+        a.x = coord[i];
+        a.y = coord[i+1];
+        pointsStar.push_back(a);
+    }
+
+    return pointsStar;
+}
+
+vector<Coordinates> CreatePlanets(Coordinates center, const int num_vertices, const float angle){
 
     CircleShape circleShape;
-    vector<Coordenadas>concatenateVertices;
+    vector<Coordinates>concatenateVertices;
 
     center.x = 0.0; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.06, angle, center);
@@ -62,10 +78,10 @@ vector<Coordenadas> CreatePlanets(Coordenadas center, const int num_vertices, co
 
 }
 
-void CreateTranslationRadious(vector<Coordenadas> &concatenateVertices, const int num_vertices, const float angle){
+void CreateTranslationRadious(vector<Coordinates> &concatenateVertices, const int num_vertices, const float angle){
 
     CircleShape circleShape;
-    Coordenadas center;
+    Coordinates center;
     center.x = 0.0;
     center.y = -0.1;
          
@@ -122,17 +138,26 @@ int main(void){
 
     //----------------------------Creating circles----------------------------
 
-    vector<Coordenadas> concatenateVertices;
+    vector<Coordinates> concatenateVertices;
     const int num_vertices = 32;
     const float angle = 0.0;
-    Coordenadas center;
+    Coordinates center;
 
     concatenateVertices = CreatePlanets(center, num_vertices, angle);
     CreateTranslationRadious(concatenateVertices, 32, 0.0);
     
     //------------------------------------------------------------------------
 
-    Coordenadas vertices[num_vertices*17];
+    //----------------------------Creating stars----------------------------
+    
+    vector<float>coord = CreateStars();
+    vector<Coordinates> pointsStar = ChangeToCoordinates(coord);
+    concatenateVertices.insert(concatenateVertices.end(), pointsStar.begin(), pointsStar.end());
+
+    //------------------------------------------------------------------------
+
+
+    Coordinates vertices[concatenateVertices.size()];
     copy(concatenateVertices.begin(), concatenateVertices.end(), vertices);
 
     GLuint buffer;
@@ -191,6 +216,12 @@ int main(void){
         glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
         glDrawArrays(GL_LINE_STRIP, 512, 32);
 
+        //Drawing stars
+
+        glUniform4f(loc_color, 0.6, 0.15, 0.0, 1.0);
+        glDrawArrays(GL_TRIANGLE_FAN, 544, 5);
+        glDrawArrays(GL_TRIANGLES, 549, 15);
+        
 
         //Desennhado planetas
         
@@ -202,7 +233,6 @@ int main(void){
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
-
 
         glUniform4f(loc_color, 0.8, 0.8, 0.0, 1.0);      
         glDrawArrays(GL_TRIANGLE_FAN, 0, 32);
