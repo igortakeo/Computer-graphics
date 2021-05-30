@@ -7,20 +7,20 @@
 
 using namespace std;
 
-typedef struct coordenadas{
+typedef struct coordinates{
     float x;
     float y;
-}Coordenadas;
+}Coordinates;
 
 class CircleShape{
     public:
         int num_vertices;
-        vector<Coordenadas>vertices;
+        vector<Coordinates>vertices;
         float radius;
         float angle;
-        Coordenadas center;
+        Coordinates center;
 };
 
-CircleShape CreateCircle(int num_vertices, float radius, float angle, Coordenadas center);
+CircleShape CreateCircle(int num_vertices, float radius, float angle, Coordinates center);
 
 #endif

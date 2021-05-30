@@ -8,8 +8,30 @@ using namespace std;
 
 class Keys{
     public: 
+        //Mouse
         float t_x;
         float t_y;
+
+        //A,W,S,D
+        float t_x0;
+        float t_y0;
+
+        //F,T,G,H
+        float t_x1;
+        float t_y1;
+
+        //J,I,K,L
+        float t_x2;
+        float t_y2;
+
+        //Setas
+        float t_x3;
+        float t_y3;
+
+        //+,-
+        float t_x4;
+        float t_y4;
+
 };
 void CreateMouseKeys(float x, float y);
 void CreateKeyboardKeys(float x, float y);

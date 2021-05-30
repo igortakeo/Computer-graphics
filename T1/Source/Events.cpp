@@ -17,8 +17,16 @@ void CreateMouseKeys(float x, float y){
 
 void CreateKeyboardKeys(float x, float y){
 
-    keyboardKeys.t_x = x;
-    keyboardKeys.t_y = y;
+    keyboardKeys.t_x0 = x;
+    keyboardKeys.t_y0 = y;
+    keyboardKeys.t_x1 = x;
+    keyboardKeys.t_y1 = y;
+    keyboardKeys.t_x2 = x;
+    keyboardKeys.t_y2 = y;
+    keyboardKeys.t_x3 = x;
+    keyboardKeys.t_y3 = y;
+    keyboardKeys.t_x4 = 1.0;
+    keyboardKeys.t_y4 = 1.0;
 }
 
 Keys GetMouseKeys(){
@@ -35,8 +43,16 @@ Keys GetKeyboardKeys(){
 
     Keys returnKeyboardKeys;
     
-    returnKeyboardKeys.t_x = keyboardKeys.t_x;
-    returnKeyboardKeys.t_y = keyboardKeys.t_y;
+    returnKeyboardKeys.t_x0 = keyboardKeys.t_x0;
+    returnKeyboardKeys.t_y0 = keyboardKeys.t_y0;
+    returnKeyboardKeys.t_x1 = keyboardKeys.t_x1;
+    returnKeyboardKeys.t_y1 = keyboardKeys.t_y1;
+    returnKeyboardKeys.t_x2 = keyboardKeys.t_x2;
+    returnKeyboardKeys.t_y2 = keyboardKeys.t_y2;
+    returnKeyboardKeys.t_x3 = keyboardKeys.t_x3;
+    returnKeyboardKeys.t_y3 = keyboardKeys.t_y3;
+    returnKeyboardKeys.t_x4 = keyboardKeys.t_x4;
+    returnKeyboardKeys.t_y4 = keyboardKeys.t_y4;
 
     return returnKeyboardKeys;
 }
@@ -59,14 +75,38 @@ static void MouseEvent(GLFWwindow *window, int button, int action, int mods){
     if (button == GLFW_MOUSE_BUTTON_RIGHT){
         mouseKeys.t_x -= 0.01f;
         mouseKeys.t_y -= 0.01f;
-    }   
+    }
+
 }
 
 static void KeyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mods){
 
-    if (key == 68) keyboardKeys.t_x += 0.01; // tecla para direita
-    if (key == 65) keyboardKeys.t_x -= 0.01; // tecla para esquerda
+    if (key == 68) keyboardKeys.t_x0 += 0.01; // D
+    if (key == 65) keyboardKeys.t_x0 -= 0.01; // A
+    if (key == 87) keyboardKeys.t_y0 += 0.01; // W
+    if (key == 83) keyboardKeys.t_y0 -= 0.01; // S
 
-    if (key == 87) keyboardKeys.t_y += 0.01; // tecla para cima
-    if (key == 83) keyboardKeys.t_y -= 0.01; // tecla para baixo
+    if (key == 72) keyboardKeys.t_x1 += 0.01; // H
+    if (key == 70) keyboardKeys.t_x1 -= 0.01; // F
+    if (key == 84) keyboardKeys.t_y1 += 0.01; // T
+    if (key == 71) keyboardKeys.t_y1 -= 0.01; // G
+
+    if (key == 76) keyboardKeys.t_x2 += 0.01; // L
+    if (key == 74) keyboardKeys.t_x2 -= 0.01; // J
+    if (key == 73) keyboardKeys.t_y2 += 0.01; // I
+    if (key == 75) keyboardKeys.t_y2 -= 0.01; // K
+
+    if (key == 262) keyboardKeys.t_x3 += 0.01; // Right
+    if (key == 263) keyboardKeys.t_x3 -= 0.01; // Left
+    if (key == 265) keyboardKeys.t_y3 += 0.01; // Up
+    if (key == 264) keyboardKeys.t_y3 -= 0.01; // Down
+
+    if(key == 334){ // +
+        keyboardKeys.t_x4  += 0.01;
+        keyboardKeys.t_y4  += 0.01;
+    }
+    if(key == 333){ // -
+        keyboardKeys.t_x4  -= 0.01;
+        keyboardKeys.t_y4  -= 0.01;    
+    }
 }
