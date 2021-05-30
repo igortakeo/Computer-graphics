@@ -9,5 +9,6 @@ using namespace std;
 vector<float> CreateMatrixTranslation(float t_x, float t_y);
 vector<float> CreateMatrixRotation(float t_x);
 vector<float> CreateMatrixScale(float t_x, float t_y);
+vector<float> CreateMatrixRotationReferencePoint(float t_x, float p_x, float p_y);
 
 #endif

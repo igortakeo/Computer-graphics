@@ -45,3 +45,16 @@ vector<float> CreateMatrixRotation(float t_x){
 
     return MatRotation;
 }
+
+vector<float> CreateMatrixRotationReferencePoint(float t_x, float p_x, float p_y){
+
+    vector<float> MatRotation
+    {
+        cos(t_x), -sin(t_x), 0.0, p_x-p_x*cos(t_x)+p_y*sin(t_x),
+        sin(t_x),  cos(t_x), 0.0, p_y-p_y*cos(t_x)-p_x*sin(t_x),
+             0.0,       0.0,                            1.0, 0.0,
+             0.0,       0.0,                            0.0, 1.0
+    };
+
+    return MatRotation;
+}

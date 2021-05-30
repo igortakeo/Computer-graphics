@@ -22,39 +22,39 @@ vector<Coordenadas> CreatePlanets(Coordenadas center, const int num_vertices, co
     CircleShape circleShape;
     vector<Coordenadas>concatenateVertices;
 
-    center.x = 0.0; center.y = 0.0;
-    circleShape = CreateCircle(num_vertices, 0.08, angle, center);
+    center.x = 0.0; center.y = -0.1;
+    circleShape = CreateCircle(num_vertices, 0.06, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
-    center.x = 0.2; center.y = 0.0;
+    center.x = 0.1; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.02, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
-    center.x = 0.3; center.y = 0.0;
+    center.x = 0.2; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.04, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
-    center.x = 0.4; center.y = 0.0;
+    center.x = 0.3; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.04, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
-    center.x = 0.5; center.y = 0.0;
+    center.x = 0.4; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.03, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
-    center.x = 0.6; center.y = 0.0;
+    center.x = 0.5; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.05, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
-    center.x = 0.7; center.y = 0.0;
+    center.x = 0.6; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.04, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
     
-    center.x = 0.8; center.y = 0.0;
+    center.x = 0.7; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.03, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
-    center.x = 0.9; center.y = 0.0;
+    center.x = 0.8; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.03, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
@@ -67,11 +67,14 @@ void CreateTranslationRadious(vector<Coordenadas> &concatenateVertices, const in
     CircleShape circleShape;
     Coordenadas center;
     center.x = 0.0;
-    center.y = 0.0;
+    center.y = -0.1;
          
-    circleShape = CreateCircle(num_vertices, 0.2, angle, center);
+    circleShape = CreateCircle(num_vertices, 0.1, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
     
+    circleShape = CreateCircle(num_vertices, 0.2, angle, center);
+    concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
+     
     circleShape = CreateCircle(num_vertices, 0.3, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
      
@@ -83,14 +86,11 @@ void CreateTranslationRadious(vector<Coordenadas> &concatenateVertices, const in
      
     circleShape = CreateCircle(num_vertices, 0.6, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-     
+      
     circleShape = CreateCircle(num_vertices, 0.7, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-      
-    circleShape = CreateCircle(num_vertices, 0.8, angle, center);
-    concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
      
-    circleShape = CreateCircle(num_vertices, 0.9, angle, center);
+    circleShape = CreateCircle(num_vertices, 0.8, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
     
 }
@@ -198,7 +198,7 @@ int main(void){
         //--------------------------------------------------------
         
         //Planet-0
-        vector<float> matrixRotation = CreateMatrixRotation(teta_0);
+        vector<float> matrixRotation = CreateMatrixRotation(0.0);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
@@ -209,7 +209,7 @@ int main(void){
 
 
         //Planet-1
-        matrixRotation = CreateMatrixRotation(teta_1);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_1, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
@@ -219,7 +219,7 @@ int main(void){
 
         
         //Planet-2
-        matrixRotation = CreateMatrixRotation(teta_2);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_2, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
@@ -229,7 +229,7 @@ int main(void){
         
 
         //Planet-3
-        matrixRotation = CreateMatrixRotation(teta_3);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_3, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
@@ -239,7 +239,7 @@ int main(void){
 
 
         //Planet-4
-        matrixRotation = CreateMatrixRotation(teta_4);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_4, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
@@ -248,7 +248,7 @@ int main(void){
         glDrawArrays(GL_TRIANGLE_FAN, 128, 32);
 
         //Planet-5
-        matrixRotation = CreateMatrixRotation(teta_5);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_5, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
@@ -257,7 +257,7 @@ int main(void){
         glDrawArrays(GL_TRIANGLE_FAN, 160, 32);
 
         //Planet-6
-        matrixRotation = CreateMatrixRotation(teta_6);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_6, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
@@ -267,7 +267,7 @@ int main(void){
 
 
         //Planet-7
-        matrixRotation = CreateMatrixRotation(teta_7);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_7, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
@@ -277,7 +277,7 @@ int main(void){
 
 
         //Planet-8
-        matrixRotation = CreateMatrixRotation(teta_8);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_8, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
