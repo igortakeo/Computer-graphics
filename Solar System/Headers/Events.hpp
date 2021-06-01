@@ -32,6 +32,9 @@ class Keys{
         float t_x4;
         float t_y4;
 
+        //Z
+        float t_x5;
+
 };
 void CreateMouseKeys(float x, float y);
 void CreateKeyboardKeys(float x, float y);

@@ -27,6 +27,7 @@ void CreateKeyboardKeys(float x, float y){
     keyboardKeys.t_y3 = y;
     keyboardKeys.t_x4 = 1.0;
     keyboardKeys.t_y4 = 1.0;
+    keyboardKeys.t_x5 = x;
 }
 
 Keys GetMouseKeys(){
@@ -53,6 +54,7 @@ Keys GetKeyboardKeys(){
     returnKeyboardKeys.t_y3 = keyboardKeys.t_y3;
     returnKeyboardKeys.t_x4 = keyboardKeys.t_x4;
     returnKeyboardKeys.t_y4 = keyboardKeys.t_y4;
+    returnKeyboardKeys.t_x5 = keyboardKeys.t_x5;
 
     return returnKeyboardKeys;
 }
@@ -80,6 +82,8 @@ static void MouseEvent(GLFWwindow *window, int button, int action, int mods){
 }
 
 static void KeyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mods){
+
+    
 
     if (key == 68) keyboardKeys.t_x0 += 0.01; // D
     if (key == 65) keyboardKeys.t_x0 -= 0.01; // A
@@ -109,4 +113,7 @@ static void KeyboardEvent(GLFWwindow *window, int key, int scancode, int action,
         keyboardKeys.t_x4  -= 0.01;
         keyboardKeys.t_y4  -= 0.01;    
     }
+
+    if (key == 90) keyboardKeys.t_x5 += 0.1; // Z
+
 }

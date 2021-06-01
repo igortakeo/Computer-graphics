@@ -26,6 +26,7 @@ using namespace std;
     W,A,S,D: Translation of orange star
     T,F,G,H: Translation of red star
     J,K,L,I: Translation of white star
+    Z: Rotation of 4 border stars
     Arrows: Translation of purple star
 
     + and -: Scale of sun
@@ -312,11 +313,13 @@ int main(void){
         //Star-1
         keys_keyboard = GetKeyboardKeys();
         vector<float> matrixTranslation = CreateMatrixTranslation(keys_keyboard.t_x0, keys_keyboard.t_y0);
+        vector<float> matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
 
         keys_mouse = GetMouseKeys();
         vector<float> matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x, keys_mouse.t_y, CENTER_X, CENTER_Y);
 
         vector<float> responseMult = Multiplication(matrixTranslation, matrixScale);
+        responseMult = Multiplication(responseMult, matrixRotation);
         copy(responseMult.begin(), responseMult.end(), transformation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
@@ -328,11 +331,13 @@ int main(void){
         //Star-2
         keys_keyboard = GetKeyboardKeys();
         matrixTranslation = CreateMatrixTranslation(keys_keyboard.t_x1+1.33, keys_keyboard.t_y1+0.0);
+        matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
 
         keys_mouse = GetMouseKeys();
         matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x-0.64+0.44, keys_mouse.t_y-0.64+0.44, CENTER_X, CENTER_Y);
 
         responseMult = Multiplication(matrixTranslation, matrixScale);
+        responseMult = Multiplication(responseMult, matrixRotation);
         copy(responseMult.begin(), responseMult.end(), transformation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
@@ -344,11 +349,13 @@ int main(void){
         //Star-3
         keys_keyboard = GetKeyboardKeys();
         matrixTranslation = CreateMatrixTranslation(keys_keyboard.t_x2-0.02, keys_keyboard.t_y2-1.44);
+        matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
 
         keys_mouse = GetMouseKeys();
         matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x-0.64+0.34, keys_mouse.t_y-0.64+0.34, CENTER_X, CENTER_Y);
 
         responseMult = Multiplication(matrixTranslation, matrixScale);
+        responseMult = Multiplication(responseMult, matrixRotation);
         copy(responseMult.begin(), responseMult.end(), transformation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
@@ -360,11 +367,13 @@ int main(void){
         //Star-4
         keys_keyboard = GetKeyboardKeys();
         matrixTranslation = CreateMatrixTranslation(keys_keyboard.t_x3+1.35, keys_keyboard.t_y3-1.43);
+        matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
 
         keys_mouse = GetMouseKeys();
         matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x-0.64+0.3, keys_mouse.t_y-0.64+0.3, CENTER_X, CENTER_Y);
 
         responseMult = Multiplication(matrixTranslation, matrixScale);
+        responseMult = Multiplication(responseMult, matrixRotation);
         copy(responseMult.begin(), responseMult.end(), transformation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
@@ -374,6 +383,7 @@ int main(void){
         glDrawArrays(GL_TRIANGLES, 609, 15);
 
         //Ministar-1
+        matrixRotation = CreateMatrixRotation(1.0);
         matrixTranslation = CreateMatrixTranslation(0.56, -0.47);
 
         keys_mouse = GetMouseKeys();
@@ -552,7 +562,7 @@ int main(void){
 
 
         //Planet-1
-        vector<float> matrixRotation = CreateMatrixRotationReferencePoint(teta_1, 0.0, -0.1);
+        matrixRotation = CreateMatrixRotationReferencePoint(teta_1, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformMatrixRotation);
         loc = glGetUniformLocation(program, "transformation");
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformMatrixRotation);
