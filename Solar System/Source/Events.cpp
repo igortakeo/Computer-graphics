@@ -78,12 +78,9 @@ static void MouseEvent(GLFWwindow *window, int button, int action, int mods){
         mouseKeys.t_x -= 0.01f;
         mouseKeys.t_y -= 0.01f;
     }
-
 }
 
 static void KeyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mods){
-
-    
 
     if (key == 68) keyboardKeys.t_x0 += 0.01; // D
     if (key == 65) keyboardKeys.t_x0 -= 0.01; // A
@@ -115,5 +112,4 @@ static void KeyboardEvent(GLFWwindow *window, int key, int scancode, int action,
     }
 
     if (key == 90) keyboardKeys.t_x5 += 0.1; // Z
-
 }
