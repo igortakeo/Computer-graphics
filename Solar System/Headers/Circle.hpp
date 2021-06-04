@@ -1,16 +1,12 @@
 #ifndef Circle_H
 #define Circle_H
+#include "../Headers/Coordinates.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <vector>
 
 using namespace std;
-
-typedef struct coordinates{
-    float x;
-    float y;
-}Coordinates;
 
 class CircleShape{
     public:

@@ -12,6 +12,7 @@
 #include "../Headers/Circle.hpp"
 #include "../Headers/Transformations.hpp"
 #include "../Headers/Star.hpp"
+#include "../Headers/Coordinates.hpp"
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -33,7 +34,6 @@ using namespace std;
     Mouse button left and button right: Scale of stars
 
 */
-
 
 vector<Coordinates> ChangeToCoordinates(vector<float>coord){
     
