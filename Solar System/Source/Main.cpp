@@ -35,7 +35,104 @@ using namespace std;
 
 */
 
-vector<Coordinates> ChangeToCoordinates(vector<float>coord){
+typedef struct colorCodes{
+    float R;
+    float G;
+    float B;
+}ColorCodes;
+
+typedef struct translationVariable{
+    float tv_1;
+    float tv_2;
+}TranslationVariable;
+
+typedef struct scaleVariable{
+    float sv_1;
+    float sv_2;
+}ScaleVariable;
+
+typedef struct coordinatesToDraw{
+    GLint Star;
+}CoordinatesToDraw;
+
+CoordinatesToDraw coordinatesToDraw;
+
+void InitializeCoordinates(){
+    coordinatesToDraw.Star = 544;
+}
+
+void DrawingStar(
+    Keys keys_mouse,
+    Keys keys_keyboard,
+    GLuint program,
+    GLint loc_color,
+    GLint loc,
+    ColorCodes color,
+    TranslationVariable translation_v,
+    ScaleVariable scale_v,
+    int starNumber){
+    
+    float t_x, t_y;
+
+    if(starNumber == 0){ t_x = keys_keyboard.t_x0, t_y = keys_keyboard.t_y0; }
+    else if(starNumber == 1){ t_x = keys_keyboard.t_x1, t_y = keys_keyboard.t_y1; }
+    else if(starNumber == 2){ t_x = keys_keyboard.t_x2, t_y = keys_keyboard.t_y2; }
+    else if(starNumber == 3){ t_x = keys_keyboard.t_x3, t_y = keys_keyboard.t_y3; }
+
+    float transformation[16];
+
+    keys_keyboard = GetKeyboardKeys();
+    vector<float> matrixTranslation = CreateMatrixTranslation(t_x + translation_v.tv_1, t_y + translation_v.tv_2);
+    vector<float> matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
+
+    keys_mouse = GetMouseKeys();
+    vector<float> matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x + scale_v.sv_1, keys_mouse.t_y + scale_v.sv_2, CENTER_X, CENTER_Y);
+
+    vector<float> responseMult = Multiplication(matrixTranslation, matrixScale);
+    responseMult = Multiplication(responseMult, matrixRotation);
+    copy(responseMult.begin(), responseMult.end(), transformation);
+    loc = glGetUniformLocation(program, "transformation");
+    glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
+
+    glUniform4f(loc_color, color.R, color.G, color.B, 1.0);
+   
+    int coord = coordinatesToDraw.Star + starNumber*20;
+    glDrawArrays(GL_TRIANGLE_FAN, coord, 5);
+    glDrawArrays(GL_TRIANGLES, coord+5, 15);
+
+}
+
+void DrawingOrbits(
+    GLint loc_color){
+
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);      
+    glDrawArrays(GL_LINE_STRIP, 288, 32);
+    
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);
+    glDrawArrays(GL_LINE_STRIP, 320, 32);
+
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);  
+    glDrawArrays(GL_LINE_STRIP, 352, 32);
+    
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);
+    glDrawArrays(GL_LINE_STRIP, 384, 32);
+
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
+    glDrawArrays(GL_LINE_STRIP, 416, 32);
+
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
+    glDrawArrays(GL_LINE_STRIP, 448, 32);
+
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
+    glDrawArrays(GL_LINE_STRIP, 480, 32);
+
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
+    glDrawArrays(GL_LINE_STRIP, 512, 32);
+
+}
+
+vector<Coordinates> ChangeToCoordinates(
+    vector<float>coord){
     
     vector<Coordinates> pointsStar;
     
@@ -49,7 +146,10 @@ vector<Coordinates> ChangeToCoordinates(vector<float>coord){
     return pointsStar;
 }
 
-vector<Coordinates> CreatePlanets(Coordinates center, const int num_vertices, const float angle){
+vector<Coordinates> CreatePlanets(
+    Coordinates center, 
+    const int num_vertices, 
+    const float angle){
 
     CircleShape circleShape;
     vector<Coordinates>concatenateVertices;
@@ -94,7 +194,10 @@ vector<Coordinates> CreatePlanets(Coordinates center, const int num_vertices, co
 
 }
 
-void CreateTranslationRadious(vector<Coordinates> &concatenateVertices, const int num_vertices, const float angle){
+void CreateTranslationRadious(
+    vector<Coordinates> &concatenateVertices, 
+    const int num_vertices, 
+    const float angle){
 
     CircleShape circleShape;
     Coordinates center;
@@ -264,6 +367,8 @@ int main(void){
     SetMouseEvent(window);
     SetKeyboardEvent(window);
 
+    InitializeCoordinates();
+
     Keys keys_mouse, keys_keyboard;
 
     float transformMatrixRotation[16];
@@ -275,6 +380,12 @@ int main(void){
 
     glfwShowWindow(window);
 
+    //-------------------------------
+
+    vector<float> matrixRotation, matrixTranslation, matrixScale, responseMult;
+    //Remover depois
+    //---------------------------------
+
     while (!glfwWindowShouldClose(window)){
 
         glfwPollEvents();
@@ -282,108 +393,45 @@ int main(void){
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.0, 0.0, 0.0, 1.0);
         
-        //*******Drawing orbits*******
-
-        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);      
-        glDrawArrays(GL_LINE_STRIP, 288, 32);
-        
-        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);
-        glDrawArrays(GL_LINE_STRIP, 320, 32);
-
-        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);  
-        glDrawArrays(GL_LINE_STRIP, 352, 32);
-        
-        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);
-        glDrawArrays(GL_LINE_STRIP, 384, 32);
-
-        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_LINE_STRIP, 416, 32);
-
-        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_LINE_STRIP, 448, 32);
-
-        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_LINE_STRIP, 480, 32);
-
-        glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);        
-        glDrawArrays(GL_LINE_STRIP, 512, 32);
+        DrawingOrbits(loc_color);
 
         //*******Drawing stars*******
         
-        //Star-1
-        keys_keyboard = GetKeyboardKeys();
-        vector<float> matrixTranslation = CreateMatrixTranslation(keys_keyboard.t_x0, keys_keyboard.t_y0);
-        vector<float> matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
-
-        keys_mouse = GetMouseKeys();
-        vector<float> matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x, keys_mouse.t_y, CENTER_X, CENTER_Y);
-
-        vector<float> responseMult = Multiplication(matrixTranslation, matrixScale);
-        responseMult = Multiplication(responseMult, matrixRotation);
-        copy(responseMult.begin(), responseMult.end(), transformation);
-        loc = glGetUniformLocation(program, "transformation");
-        glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
-
-        glUniform4f(loc_color, 1.0, 0.57254902, 0.160784314, 1.0);
-        glDrawArrays(GL_TRIANGLE_FAN, 544, 5);
-        glDrawArrays(GL_TRIANGLES, 549, 15);
+        //Star-0
+        ColorCodes color;
+        color.R = 1.0; color.G = 0.57254902; color.B = 0.16078431;
         
+        TranslationVariable translation_v;
+        translation_v.tv_1 = 0.0; translation_v.tv_2 = 0.0;
+
+        ScaleVariable scale_v;
+        scale_v.sv_1 = 0.0; scale_v.sv_2 = 0.0;
+
+        DrawingStar(keys_mouse, keys_keyboard, program, loc_color, loc, color, translation_v, scale_v, 0);
+
+        //Star-1
+        color.R = 0.6; color.G = 0.15; color.B = 0.0;
+        translation_v.tv_1 = 1.33; translation_v.tv_2 = 0.0;
+        scale_v.sv_1 = -0.64+0.44; scale_v.sv_2 = -0.64+0.44;
+
+        DrawingStar(keys_mouse, keys_keyboard, program, loc_color, loc, color, translation_v, scale_v, 1);
+
         //Star-2
-        keys_keyboard = GetKeyboardKeys();
-        matrixTranslation = CreateMatrixTranslation(keys_keyboard.t_x1+1.33, keys_keyboard.t_y1+0.0);
-        matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
+        color.R =  0.780392157; color.G = 0.847058824; color.B = 1.0;
+        translation_v.tv_1 = -0.02; translation_v.tv_2 = -1.44;
+        scale_v.sv_1 = -0.64+0.34; scale_v.sv_2 = -0.64+0.34;
 
-        keys_mouse = GetMouseKeys();
-        matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x-0.64+0.44, keys_mouse.t_y-0.64+0.44, CENTER_X, CENTER_Y);
-
-        responseMult = Multiplication(matrixTranslation, matrixScale);
-        responseMult = Multiplication(responseMult, matrixRotation);
-        copy(responseMult.begin(), responseMult.end(), transformation);
-        loc = glGetUniformLocation(program, "transformation");
-        glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
-
-        glUniform4f(loc_color, 0.6, 0.15, 0.0, 1.0);
-        glDrawArrays(GL_TRIANGLE_FAN, 564, 5);
-        glDrawArrays(GL_TRIANGLES, 569, 15);
+        DrawingStar(keys_mouse, keys_keyboard, program, loc_color, loc, color, translation_v, scale_v, 2);
 
         //Star-3
-        keys_keyboard = GetKeyboardKeys();
-        matrixTranslation = CreateMatrixTranslation(keys_keyboard.t_x2-0.02, keys_keyboard.t_y2-1.44);
-        matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
+        color.R =  0.270588235; color.G = 0.000705882; color.B = 1.0;
+        translation_v.tv_1 = 1.35; translation_v.tv_2 = -1.43;
+        scale_v.sv_1 = -0.64+0.3; scale_v.sv_2 = -0.64+0.3;
 
-        keys_mouse = GetMouseKeys();
-        matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x-0.64+0.34, keys_mouse.t_y-0.64+0.34, CENTER_X, CENTER_Y);
-
-        responseMult = Multiplication(matrixTranslation, matrixScale);
-        responseMult = Multiplication(responseMult, matrixRotation);
-        copy(responseMult.begin(), responseMult.end(), transformation);
-        loc = glGetUniformLocation(program, "transformation");
-        glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
-
-        glUniform4f(loc_color, 0.780392157, 0.847058824, 1.0, 1.0);
-        glDrawArrays(GL_TRIANGLE_FAN, 584, 5);
-        glDrawArrays(GL_TRIANGLES, 589, 15);
-
-        //Star-4
-        keys_keyboard = GetKeyboardKeys();
-        matrixTranslation = CreateMatrixTranslation(keys_keyboard.t_x3+1.35, keys_keyboard.t_y3-1.43);
-        matrixRotation = CreateMatrixRotationReferencePoint(keys_keyboard.t_x5, CENTER_X, CENTER_Y);
-
-        keys_mouse = GetMouseKeys();
-        matrixScale = CreateMatrixScaleReferencePoint(keys_mouse.t_x-0.64+0.3, keys_mouse.t_y-0.64+0.3, CENTER_X, CENTER_Y);
-
-        responseMult = Multiplication(matrixTranslation, matrixScale);
-        responseMult = Multiplication(responseMult, matrixRotation);
-        copy(responseMult.begin(), responseMult.end(), transformation);
-        loc = glGetUniformLocation(program, "transformation");
-        glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
-
-        glUniform4f(loc_color, 0.270588235, 0.000705882, 1.0, 1.0);
-        glDrawArrays(GL_TRIANGLE_FAN, 604, 5);
-        glDrawArrays(GL_TRIANGLES, 609, 15);
+        DrawingStar(keys_mouse, keys_keyboard, program, loc_color, loc, color, translation_v, scale_v, 3);
 
         //Ministar-1
-        matrixRotation = CreateMatrixRotation(1.0);
+        //matrixRotation = CreateMatrixRotation(1.0);
         matrixTranslation = CreateMatrixTranslation(0.56, -0.47);
 
         keys_mouse = GetMouseKeys();
