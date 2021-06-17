@@ -63,7 +63,7 @@ typedef struct coordinatesToDraw{
 CoordinatesToDraw coordinatesToDraw;
 
 void InitializeCoordinates(){
-    
+
     coordinatesToDraw.Planet = 0;
     coordinatesToDraw.Orbits = 288;
     coordinatesToDraw.Star = 544;
@@ -94,7 +94,7 @@ void DrawingPlanets(
     float transformation[16];
 
     if(planetNumber == 0){
-        
+
         keys_keyboard = GetKeyboardKeys();
         vector<float> matrixScale= CreateMatrixScaleReferencePoint(keys_keyboard.t_x4, keys_keyboard.t_y4, 0.0, -0.1);
         copy(matrixScale.begin(), matrixScale.end(), transformation);
@@ -102,7 +102,7 @@ void DrawingPlanets(
         glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
     }
     else{
-        
+
         vector<float> matrixRotation = CreateMatrixRotationReferencePoint(teta, 0.0, -0.1);
         copy(matrixRotation.begin(), matrixRotation.end(), transformation);
         loc = glGetUniformLocation(program, "transformation");
@@ -122,13 +122,11 @@ void DrawingMiniStar(
     ColorCodes color,
     TranslationVariable translation_v,
     int starNumber){
-    
+
     float transformation[16];
 
     vector<float> matrixTranslation = CreateMatrixTranslation(translation_v.tv_1, translation_v.tv_2);
-
     vector<float> matrixScale = CreateMatrixScaleReferencePoint(0.2, 0.2, CENTER_X, CENTER_Y);
-
     vector<float> responseMult = Multiplication(matrixTranslation, matrixScale);
     copy(responseMult.begin(), responseMult.end(), transformation);
     loc = glGetUniformLocation(program, "transformation");
@@ -151,31 +149,31 @@ void DrawingStar(
     TranslationVariable translation_v,
     ScaleVariable scale_v,
     int starNumber){
-    
+
     float t_x, t_y;
     vector<float> matrixTranslation;
 
     keys_keyboard = GetKeyboardKeys();
 
-    if(starNumber == 0){ 
+    if(starNumber == 0){
         matrixTranslation = CreateMatrixTranslation(
-            keys_keyboard.t_x0 + translation_v.tv_1, 
+            keys_keyboard.t_x0 + translation_v.tv_1,
             keys_keyboard.t_y0 + translation_v.tv_2);
     }
     else if(starNumber == 1){
         matrixTranslation = CreateMatrixTranslation(
-            keys_keyboard.t_x1 + translation_v.tv_1, 
+            keys_keyboard.t_x1 + translation_v.tv_1,
             keys_keyboard.t_y1 + translation_v.tv_2);
     }
     else if(starNumber == 2){
        matrixTranslation = CreateMatrixTranslation(
-            keys_keyboard.t_x2 + translation_v.tv_1, 
+            keys_keyboard.t_x2 + translation_v.tv_1,
             keys_keyboard.t_y2 + translation_v.tv_2);
     }
     else if(starNumber == 3){
        matrixTranslation = CreateMatrixTranslation(
-            keys_keyboard.t_x3 + translation_v.tv_1, 
-            keys_keyboard.t_y3 + translation_v.tv_2);    
+            keys_keyboard.t_x3 + translation_v.tv_1,
+            keys_keyboard.t_y3 + translation_v.tv_2);
     }
 
     float transformation[16];
@@ -192,7 +190,7 @@ void DrawingStar(
     glUniformMatrix4fv(loc, 1, GL_TRUE, transformation);
 
     glUniform4f(loc_color, color.R, color.G, color.B, 1.0);
-   
+
     int coord = coordinatesToDraw.Star + starNumber*20;
     glDrawArrays(GL_TRIANGLE_FAN, coord, 5);
     glDrawArrays(GL_TRIANGLES, coord+5, 15);
@@ -203,15 +201,15 @@ void DrawingOrbits(
     int orbitNumber){
 
     int coord = coordinatesToDraw.Orbits + orbitNumber*32;
-    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);      
+    glUniform4f(loc_color, 0.5, 0.5, 0.5, 1.0);
     glDrawArrays(GL_LINE_STRIP, coord, 32);
 }
 
 vector<Coordinates> ChangeToCoordinates(
     vector<float>coord){
-    
+
     vector<Coordinates> pointsStar;
-    
+
     for(int i=0; i<coord.size(); i+=2){
         Coordinates a;
         a.x = coord[i];
@@ -223,8 +221,8 @@ vector<Coordinates> ChangeToCoordinates(
 }
 
 vector<Coordinates> CreatePlanets(
-    Coordinates center, 
-    const int num_vertices, 
+    Coordinates center,
+    const int num_vertices,
     const float angle){
 
     CircleShape circleShape;
@@ -257,7 +255,7 @@ vector<Coordinates> CreatePlanets(
     center.x = 0.6; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.04, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-    
+
     center.x = 0.7; center.y = -0.1;
     circleShape = CreateCircle(num_vertices, 0.03, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
@@ -267,45 +265,42 @@ vector<Coordinates> CreatePlanets(
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
 
     return concatenateVertices;
-
 }
 
 void CreateTranslationRadious(
-    vector<Coordinates> &concatenateVertices, 
-    const int num_vertices, 
+    vector<Coordinates> &concatenateVertices,
+    const int num_vertices,
     const float angle){
 
     CircleShape circleShape;
     Coordinates center;
     center.x = 0.0;
     center.y = -0.1;
-         
+
     circleShape = CreateCircle(num_vertices, 0.1, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-    
+
     circleShape = CreateCircle(num_vertices, 0.2, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-     
+
     circleShape = CreateCircle(num_vertices, 0.3, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-     
+
     circleShape = CreateCircle(num_vertices, 0.4, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-     
+
     circleShape = CreateCircle(num_vertices, 0.5, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-     
+
     circleShape = CreateCircle(num_vertices, 0.6, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-      
+
     circleShape = CreateCircle(num_vertices, 0.7, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-     
+
     circleShape = CreateCircle(num_vertices, 0.8, angle, center);
     concatenateVertices.insert(concatenateVertices.end(), circleShape.vertices.begin(), circleShape.vertices.end());
-    
 }
-
 
 int main(void){
 
@@ -340,11 +335,9 @@ int main(void){
 
     concatenateVertices = CreatePlanets(center, num_vertices, angle);
     CreateTranslationRadious(concatenateVertices, 32, 0.0);
-    
-    //------------------------------------------------------------------------
 
-    //----------------------------Creating stars----------------------------
-    
+    //----------------------------Creating stars------------------------------
+
     //Star-1
     vector<float>coord = CreateStars();
     vector<Coordinates> pointsStar = ChangeToCoordinates(coord);
@@ -404,24 +397,23 @@ int main(void){
     coord = CreateStars();
     pointsStar = ChangeToCoordinates(coord);
     concatenateVertices.insert(concatenateVertices.end(), pointsStar.begin(), pointsStar.end());
-    
+
     //Ministar-9
     coord = CreateStars();
     pointsStar = ChangeToCoordinates(coord);
     concatenateVertices.insert(concatenateVertices.end(), pointsStar.begin(), pointsStar.end());
-    
+
     //Ministar-10
     coord = CreateStars();
     pointsStar = ChangeToCoordinates(coord);
     concatenateVertices.insert(concatenateVertices.end(), pointsStar.begin(), pointsStar.end());
-    
+
     //Ministar-11
     coord = CreateStars();
     pointsStar = ChangeToCoordinates(coord);
     concatenateVertices.insert(concatenateVertices.end(), pointsStar.begin(), pointsStar.end());
 
     //------------------------------------------------------------------------
-
 
     Coordinates vertices[concatenateVertices.size()];
     copy(concatenateVertices.begin(), concatenateVertices.end(), vertices);
@@ -450,14 +442,14 @@ int main(void){
     TranslationVariable translation_v;
     ScaleVariable scale_v;
     Keys keys_mouse, keys_keyboard;   
-    float teta_0 = 90.0; 
-    float teta_1 = 90.0; 
+    float teta_0 = 90.0;
+    float teta_1 = 90.0;
     float teta_2 = 90.0;
-    float teta_3 = 90.0; 
-    float teta_4 = 90.0; 
-    float teta_5 = 90.0; 
-    float teta_6 = 90.0; 
-    float teta_7 = 90.0; 
+    float teta_3 = 90.0;
+    float teta_4 = 90.0;
+    float teta_5 = 90.0;
+    float teta_6 = 90.0;
+    float teta_7 = 90.0;
     float teta_8 = 90.0;
 
     glfwShowWindow(window);
@@ -468,12 +460,12 @@ int main(void){
 
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.0, 0.0, 0.0, 1.0);
-        
+
         //Orbits
         for(int i=0; i<8; i++) DrawingOrbits(loc_color, i);
 
         //Star-0
-        color.R = 1.0; color.G = 0.57254902; color.B = 0.16078431;       
+        color.R = 1.0; color.G = 0.57254902; color.B = 0.16078431;
         translation_v.tv_1 = 0.0; translation_v.tv_2 = 0.0;
         scale_v.sv_1 = 0.0; scale_v.sv_2 = 0.0;
         DrawingStar(keys_mouse, keys_keyboard, program, loc_color, loc, color, translation_v, scale_v, 0);
@@ -495,7 +487,7 @@ int main(void){
         translation_v.tv_1 = 1.35; translation_v.tv_2 = -1.43;
         scale_v.sv_1 = -0.64+0.3; scale_v.sv_2 = -0.64+0.3;
         DrawingStar(keys_mouse, keys_keyboard, program, loc_color, loc, color, translation_v, scale_v, 3);
-        
+
         //Color to ministars
         color.R = 1.0; color.G = 0.874509804; color.B = 0.0;
 
@@ -508,41 +500,41 @@ int main(void){
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 1);
 
         //Ministar-2
-        translation_v.tv_1 = 1.1; translation_v.tv_2 = -0.42;        
+        translation_v.tv_1 = 1.1; translation_v.tv_2 = -0.42;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 2);
 
         //Ministar-3
-        translation_v.tv_1 = 0.63; translation_v.tv_2 = -1.26;        
+        translation_v.tv_1 = 0.63; translation_v.tv_2 = -1.26;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 3);
 
         //Ministar-4
-        translation_v.tv_1 = -0.059999; translation_v.tv_2 = -0.97999;        
+        translation_v.tv_1 = -0.059999; translation_v.tv_2 = -0.97999;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 4);
-        
+
         //Ministar-5
-        translation_v.tv_1 = 0.56; translation_v.tv_2 = 0.02;        
+        translation_v.tv_1 = 0.56; translation_v.tv_2 = 0.02;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 5);
 
         //Ministar-6
-        translation_v.tv_1 = 0.969999; translation_v.tv_2 = -0.78;        
+        translation_v.tv_1 = 0.969999; translation_v.tv_2 = -0.78;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 6);
-        
+
         //Ministar-7
-        translation_v.tv_1 = 1.24; translation_v.tv_2 = -1.18;        
+        translation_v.tv_1 = 1.24; translation_v.tv_2 = -1.18;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 7);
 
         //Ministar-8
-        translation_v.tv_1 = 0.53; translation_v.tv_2 = -1.04;        
+        translation_v.tv_1 = 0.53; translation_v.tv_2 = -1.04;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 8);
-        
+
         //Ministar-9
-        translation_v.tv_1 = 1.12; translation_v.tv_2 = -0.16;        
+        translation_v.tv_1 = 1.12; translation_v.tv_2 = -0.16;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 9);
 
         //Ministar-10
-        translation_v.tv_1 = 0.0300001; translation_v.tv_2 = -0.28;        
+        translation_v.tv_1 = 0.0300001; translation_v.tv_2 = -0.28;
         DrawingMiniStar(program, loc_color, loc, color, translation_v, 10);
-        
+
         //Planet-0
         color.R = 0.8; color.G = 0.8; color.B = 0.0;
         DrawingPlanets(keys_keyboard, program, loc_color, loc, color, 0, teta_0);
@@ -550,7 +542,7 @@ int main(void){
         //Planet-1
         color.R = 0.6; color.G = 0.15; color.B = 0.0;
         DrawingPlanets(keys_keyboard, program, loc_color, loc, color, 1, teta_1);
-        
+
         //Planet-2
         color.R = 0.7; color.G = 0.7; color.B = 0.7;
         DrawingPlanets(keys_keyboard, program, loc_color, loc, color, 2, teta_2);
@@ -578,7 +570,7 @@ int main(void){
         //Planet-8
         color.R = 0.1; color.G = 0.1; color.B = 0.4;
         DrawingPlanets(keys_keyboard, program, loc_color, loc, color, 8, teta_8);
-        
+
         teta_0 += 0.8;
         teta_1 -= 0.6;
         teta_2 += 0.5;
@@ -591,7 +583,7 @@ int main(void){
 
         //Reseting teta in order to keep planets orbit stopped
         ResetTeta(program, loc);
-        
+
         sleep_for(milliseconds(100));
 
         glfwSwapBuffers(window);
