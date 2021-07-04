@@ -32,7 +32,7 @@ Solar System 2D implemented in C++ using OpenGL
 
 ## Example
 
-![alt text](https://github.com/igortakeo/Computer-graphics/blob/master/Solar%20System/Example/example.gif)
+![alt text](https://github.com/igortakeo/Computer-graphics/blob/master/Solar%20System%202D/Example/example.gif)
 
 ## About
 > OS version: Ubuntu 20.04.2 LTS
