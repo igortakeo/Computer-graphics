@@ -1,2 +1,2 @@
-# Computer graphics
-Repositório para os trabalhos desenvolvidos na disciplina de Computação Gráfica
+# Computer Graphics
+Repository to works developed in Computer Graphics class
