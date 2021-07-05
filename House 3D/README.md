@@ -4,6 +4,12 @@ House 3D implemented in Python (Jupyter) using OpenGL
 
 ## Commands
 
+- W, A, S, D: move the camera around the scene (modify the view matrix)
+- Mouse: alter the camera vision
+- P: alter the vision mode (polygonal mesh)
+- F, G: alter the Far (modify the projection matrix)
+- N, M: alter the Near (modify the projection matrix)
+- K, L: modify the Field-Of-View
 
 ## Librarys
 
