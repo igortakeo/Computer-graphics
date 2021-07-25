@@ -10,6 +10,8 @@ House 3D implemented in Python (Jupyter) using OpenGL
 - F, G: alter the Far (modify the projection matrix)
 - N, M: alter the Near (modify the projection matrix)
 - K, L: modify the Field-Of-View
+- U, P: modifica a luz ambiente
+- Q: acende a luz interna
 
 ## Librarys
 
